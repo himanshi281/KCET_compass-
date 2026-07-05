@@ -31,7 +31,7 @@ function Navbar() {
             ) : (
               <>
                 <Link to="/login" style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Log in</Link>
-                <Link to="/signup" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.875rem' }}>Sign up</Link>
+                <Link to="/signup" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.875rem', color: 'white' }}>Sign up</Link>
               </>
             )}
           </div>

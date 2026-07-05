@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const location = useLocation();
+  const routerLocation = useLocation();
   const navigate = useNavigate();
   
   // URL Params State
@@ -200,7 +200,7 @@ export default function Search() {
             </button>
           ) : (
             <button 
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate('/login', { state: { from: location.pathname + location.search } }); }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate('/login', { state: { from: routerLocation.pathname + routerLocation.search } }); }}
               style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}
               title="Login to save college"
             >
