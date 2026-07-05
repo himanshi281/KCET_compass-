@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
           success: true,
           message: "Signup successful",
           token,
-          user: { id: user.id, name: user.name, email: user.email, likedColleges: user.likedColleges }
+          user: { id: user.id, name: user.name, email: user.email, likedColleges: user.likedColleges, avatar: user.avatar }
         });
       }
     );
@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
           success: true,
           message: "Login successful",
           token,
-          user: { id: user.id, name: user.name, email: user.email, likedColleges: user.likedColleges }
+          user: { id: user.id, name: user.name, email: user.email, likedColleges: user.likedColleges, avatar: user.avatar }
         });
       }
     );
@@ -121,6 +121,29 @@ exports.toggleLike = async (req, res) => {
     res.json({ success: true, user: updatedUser });
   } catch (error) {
     console.error("Toggle Like error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+// ==========================================
+// ✅ UPDATE AVATAR
+// ==========================================
+exports.updateAvatar = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const { avatar } = req.body;
+
+    if (!avatar) {
+      return res.status(400).json({ success: false, message: "Avatar is required" });
+    }
+
+    user.avatar = avatar;
+    await user.save();
+    
+    const updatedUser = await User.findById(req.user.id).select('-password').populate('likedColleges');
+    res.json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error("Update Avatar error:", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };

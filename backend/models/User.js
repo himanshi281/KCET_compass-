@@ -33,7 +33,11 @@ const userSchema =
     likedColleges: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'College'
-    }]
+    }],
+    avatar: {
+      type: String,
+      default: 'Felix'
+    }
   }, { timestamps: true });
 
 

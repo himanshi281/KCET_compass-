@@ -4,8 +4,24 @@ import { Navigate, Link } from 'react-router-dom';
 import { Search as SearchIcon, MapPin, Hash, GraduationCap, Heart } from 'lucide-react';
 
 export default function Dashboard() {
-  const { user, loading, toggleLike } = useContext(AuthContext);
+  const { user, loading, toggleLike, updateAvatar } = useContext(AuthContext);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isEditingAvatar, setIsEditingAvatar] = useState(false);
+  const [updatingAvatar, setUpdatingAvatar] = useState(false);
+
+  const AVATARS = ['Felix', 'Aneka', 'Jocelyn', 'Buster', 'Salem', 'Sheba', 'Sasha', 'Snickers', 'Oliver', 'Molly', 'Missy', 'Leo', 'Kitty', 'Jack', 'Gizmo'];
+
+  const handleSelectAvatar = async (seed) => {
+    try {
+      setUpdatingAvatar(true);
+      await updateAvatar(seed);
+      setIsEditingAvatar(false);
+    } catch (err) {
+      alert("Failed to update avatar");
+    } finally {
+      setUpdatingAvatar(false);
+    }
+  };
 
   if (loading) {
     return <div style={{ minHeight: 'calc(100vh - 65px)', padding: '60px 20px', textAlign: 'center' }}>Loading...</div>;
@@ -26,6 +42,43 @@ export default function Dashboard() {
     <div style={{ background: 'var(--bg-secondary)', minHeight: 'calc(100vh - 65px)' }}>
       {/* Header */}
       <div style={{ background: 'var(--bg-main)', borderBottom: '1px solid var(--border-color)', padding: '60px 20px', textAlign: 'center' }}>
+        
+        <div style={{ position: 'relative', width: '120px', height: '120px', margin: '0 auto 24px' }}>
+          <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'var(--bg-tertiary)', border: '4px solid white', boxShadow: 'var(--shadow-md)', overflow: 'hidden' }}>
+            <img src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.avatar || 'Felix'}`} alt="Avatar" style={{ width: '100%', height: '100%' }} />
+          </div>
+          <button 
+            onClick={() => setIsEditingAvatar(!isEditingAvatar)}
+            style={{ position: 'absolute', bottom: 0, right: 0, background: 'var(--brand-orange)', color: 'white', border: 'none', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            title="Edit Avatar"
+          >
+            ✏️
+          </button>
+        </div>
+
+        {isEditingAvatar && (
+          <div style={{ background: 'white', borderRadius: '12px', padding: '24px', maxWidth: '600px', margin: '0 auto 32px', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)' }}>
+            <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', fontWeight: 600 }}>Choose your avatar {updatingAvatar && '(Saving...)'}</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
+              {AVATARS.map(seed => (
+                <button
+                  key={seed}
+                  onClick={() => handleSelectAvatar(seed)}
+                  disabled={updatingAvatar}
+                  style={{ 
+                    width: '64px', height: '64px', borderRadius: '50%', border: user?.avatar === seed ? '3px solid var(--brand-orange)' : '1px solid var(--border-color)', 
+                    background: 'var(--bg-tertiary)', cursor: 'pointer', overflow: 'hidden', padding: 0, transition: 'transform 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  <img src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${seed}`} alt={seed} style={{ width: '100%', height: '100%' }} />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <h1 className="results-title" style={{ fontWeight: 800, marginBottom: '16px' }}>My Dashboard</h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '32px' }}>Manage your profile and view your saved colleges.</p>
         

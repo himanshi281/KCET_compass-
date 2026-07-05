@@ -62,8 +62,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateAvatar = async (avatar) => {
+    if (!user) return;
+    try {
+      const res = await api.put('/auth/avatar', { avatar });
+      setUser(res.data.user);
+    } catch (err) {
+      console.error('Error updating avatar', err);
+      throw err;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, toggleLike }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, toggleLike, updateAvatar }}>
       {children}
     </AuthContext.Provider>
   );

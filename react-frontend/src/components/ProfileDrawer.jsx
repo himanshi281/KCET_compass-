@@ -29,8 +29,8 @@ export default function ProfileDrawer() {
           color: 'var(--text-primary)'
         }}
       >
-        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--brand-orange)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <User size={18} />
+        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg-tertiary)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <img src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.avatar || 'Felix'}`} alt="Avatar" style={{ width: '100%', height: '100%' }} />
         </div>
         <span className="hide-on-mobile">{user?.name}</span>
       </button>
@@ -68,8 +68,8 @@ export default function ProfileDrawer() {
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--brand-orange)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-            <User size={40} />
+          <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--bg-tertiary)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', border: '2px solid var(--border-color)' }}>
+            <img src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.avatar || 'Felix'}`} alt="Avatar" style={{ width: '100%', height: '100%' }} />
           </div>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '4px' }}>{user?.name}</h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>{user?.email}</p>
