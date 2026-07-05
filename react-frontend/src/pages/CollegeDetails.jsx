@@ -1,13 +1,14 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, Hash } from 'lucide-react';
+import { ArrowLeft, MapPin, Hash, Heart, Building } from 'lucide-react';
+import { AuthContext } from '../context/AuthContext';
 import api from '../api';
 
 export default function CollegeDetails() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, toggleLike } = useContext(AuthContext);
   
   // 1. Instantly use the rich object passed via React Router State! (Zero API Calls)
   const [college, setCollege] = useState(location.state?.college || null);
@@ -49,11 +50,32 @@ export default function CollegeDetails() {
             <ArrowLeft size={16} /> Back to Search
           </button>
           
-          <h1 style={{ fontSize: '3rem', marginBottom: '16px', lineHeight: 1.1 }}>{college.collegeName}</h1>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div style={{ width: '64px', height: '64px', background: 'white', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)' }}>
+                <Building size={32} color="var(--brand-orange)" />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--brand-orange)', textTransform: 'uppercase', marginBottom: '4px' }}>{college.collegeCode}</div>
+                <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2 }}>{college.collegeName}</h1>
+              </div>
+            </div>
+            
+            {user && (
+              <button 
+                onClick={() => toggleLike(college._id)}
+                style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '50%', padding: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)', transition: 'transform 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                title="Save college"
+              >
+                <Heart size={24} fill={user.likedColleges?.some(c => (c._id || c) === college._id) ? 'var(--brand-orange)' : 'none'} color={user.likedColleges?.some(c => (c._id || c) === college._id) ? 'var(--brand-orange)' : 'var(--text-muted)'} />
+              </button>
+            )}
+          </div>
           
           <div className="flex-wrap-mobile" style={{ color: 'var(--text-secondary)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={18} color="var(--brand-orange)" /> {college.district || 'Unknown District'}</span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Hash size={18} color="var(--brand-orange)" /> {college.collegeCode}</span>
             <span style={{ background: 'rgba(42, 90, 74, 0.1)', color: 'var(--brand-orange)', padding: '2px 8px', borderRadius: '4px', fontWeight: 600, fontSize: '0.875rem' }}>
               {college.collegeType || 'Private'}
             </span>

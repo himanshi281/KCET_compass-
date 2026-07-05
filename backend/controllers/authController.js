@@ -1,176 +1,126 @@
-const User =
-  require("../models/User");
-
-
+const User = require("../models/User");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // ==========================================
 // ✅ SIGNUP
 // ==========================================
+exports.signup = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    let user = await User.findOne({ email });
 
-exports.signup =
-  async (req, res) => {
+    if (user) {
+      return res.status(400).json({ success: false, message: "User already exists" });
+    }
 
-    try {
+    user = new User({ name, email, password });
 
-      const {
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
 
-        name,
+    await user.save();
 
-        email,
-
-        password
-
-      } = req.body;
-
-
-      const existingUser =
-        await User.findOne({
-
-          email
-
+    // Create JWT
+    const payload = { user: { id: user.id } };
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET || 'fallback_secret',
+      { expiresIn: '5 days' },
+      (err, token) => {
+        if (err) throw err;
+        res.status(201).json({
+          success: true,
+          message: "Signup successful",
+          token,
+          user: { id: user.id, name: user.name, email: user.email, likedColleges: user.likedColleges }
         });
-
-
-      if (existingUser) {
-
-        return res.status(400)
-          .json({
-
-            success: false,
-
-            message:
-              "User already exists"
-
-          });
-
       }
-
-
-      const newUser =
-        new User({
-
-          name,
-
-          email,
-
-          password
-
-        });
-
-
-      await newUser.save();
-
-
-      res.status(201).json({
-
-        success: true,
-
-        message:
-          "Signup successful"
-
-      });
-
-    }
-
-    catch (error) {
-
-      res.status(500).json({
-
-        success: false,
-
-        message:
-          "Server error"
-
-      });
-
-    }
-
-  };
-
-
+    );
+  } catch (error) {
+    console.error("Signup error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 
 // ==========================================
 // ✅ LOGIN
 // ==========================================
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).populate('likedColleges');
 
-exports.login =
-  async (req, res) => {
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
 
-    try {
+    // Compare hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    
+    // Also allow old plaintext passwords if they haven't been hashed yet (for backwards compatibility if they created users before)
+    if (!isMatch && user.password !== password) {
+      return res.status(401).json({ success: false, message: "Incorrect password" });
+    }
 
-      const {
-
-        email,
-
-        password
-
-      } = req.body;
-
-
-      const user =
-        await User.findOne({
-
-          email
-
+    // Create JWT
+    const payload = { user: { id: user.id } };
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET || 'fallback_secret',
+      { expiresIn: '5 days' },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json({
+          success: true,
+          message: "Login successful",
+          token,
+          user: { id: user.id, name: user.name, email: user.email, likedColleges: user.likedColleges }
         });
-
-
-      if (!user) {
-
-        return res.status(404)
-          .json({
-
-            success: false,
-
-            message:
-              "User not found"
-
-          });
-
       }
+    );
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 
+// ==========================================
+// ✅ GET PROFILE
+// ==========================================
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password').populate('likedColleges');
+    res.json({ success: true, user });
+  } catch (error) {
+    console.error("Get Profile error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 
-      if (
-        user.password !== password
-      ) {
+// ==========================================
+// ✅ TOGGLE LIKE COLLEGE
+// ==========================================
+exports.toggleLike = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const collegeId = req.params.collegeId;
 
-        return res.status(401)
-          .json({
+    const isLiked = user.likedColleges.includes(collegeId);
 
-            success: false,
-
-            message:
-              "Incorrect password"
-
-          });
-
-      }
-
-
-      res.status(200).json({
-
-        success: true,
-
-        message:
-          "Login successful",
-
-        user
-
-      });
-
+    if (isLiked) {
+      user.likedColleges = user.likedColleges.filter(id => id.toString() !== collegeId);
+    } else {
+      user.likedColleges.push(collegeId);
     }
 
-    catch (error) {
-
-      res.status(500).json({
-
-        success: false,
-
-        message:
-          "Server error"
-
-      });
-
-    }
-
-  };
+    await user.save();
+    
+    const updatedUser = await User.findById(req.user.id).select('-password').populate('likedColleges');
+    res.json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error("Toggle Like error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};

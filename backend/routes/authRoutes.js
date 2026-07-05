@@ -1,42 +1,15 @@
-const express =
-  require("express");
-
-
-
-const router =
-  express.Router();
-
-
-
-const {
-
-  signup,
-
-  login
-
-} = require(
-
-  "../controllers/authController"
-
-);
-
-
+const express = require("express");
+const router = express.Router();
+const auth = require('../middleware/auth');
+const { signup, login, getProfile, toggleLike } = require("../controllers/authController");
 
 // ==========================================
 // ROUTES
 // ==========================================
 
-router.post(
-  "/signup",
-  signup
-);
+router.post("/signup", signup);
+router.post("/login", login);
+router.get("/me", auth, getProfile);
+router.post("/like/:collegeId", auth, toggleLike);
 
-router.post(
-  "/login",
-  login
-);
-
-
-
-module.exports =
-  router;
+module.exports = router;

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useContext } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search as SearchIcon, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search as SearchIcon, Filter, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import api from '../api';
 import heroImage from '../assets/image.png';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,6 +44,8 @@ export default function Search() {
   // Local State
   const [currentResults, setCurrentResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  const { user, toggleLike } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState('safe');
   
   // Dropdown Options
@@ -181,8 +184,19 @@ export default function Search() {
         onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; e.currentTarget.style.borderColor = 'var(--brand-orange)'; }}
         onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--brand-orange)', textTransform: 'uppercase' }}>{c.collegeCode || 'CODE'}</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--brand-orange)', textTransform: 'uppercase' }}>
+            {c.collegeCode || 'CODE'}
+          </span>
+          {user && (
+            <button 
+              onClick={(e) => { e.preventDefault(); toggleLike(c._id); }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-orange)', padding: 0 }}
+              title="Save college"
+            >
+              <Heart size={20} fill={user.likedColleges?.some(lc => (lc._id || lc) === c._id) ? 'var(--brand-orange)' : 'none'} />
+            </button>
+          )}
           <span style={{ fontSize: '0.75rem', padding: '4px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', fontWeight: 500 }}>{c.district || 'Location'}</span>
         </div>
         

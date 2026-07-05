@@ -27,14 +27,14 @@ const userSchema =
 
 
     password: {
-
       type: String,
-
       required: true
-
-    }
-
-  });
+    },
+    likedColleges: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'College'
+    }]
+  }, { timestamps: true });
 
 
 
