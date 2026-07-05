@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Settings, ClipboardList } from 'lucide-react';
+import heroImage from '../assets/image.png';
 
 export default function Data() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ export default function Data() {
           </div>
           {/* Right Image Side */}
           <div style={{ flex: 1, position: 'relative', background: '#ccc' }}>
-            <img src="/src/assets/image.png" alt="Students" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={heroImage} alt="Students" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         </div>
       </div>
@@ -88,7 +89,7 @@ export default function Data() {
         
         <div className="grid-custom-stats" style={{ height: '100%', minHeight: '400px' }}>
           <div style={{ borderRadius: '24px', overflow: 'hidden', background: '#ccc' }}>
-            <img src="/src/assets/image.png" alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={heroImage} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           
           <div style={{ background: '#2a5a4a', borderRadius: '24px', padding: '40px', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left' }}>
@@ -97,7 +98,7 @@ export default function Data() {
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#ccc', overflow: 'hidden' }}>
-                <img src="/src/assets/image.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={heroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div>
                 <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>Brooklyn Simmons</div>
@@ -107,7 +108,7 @@ export default function Data() {
           </div>
           
           <div style={{ borderRadius: '24px', overflow: 'hidden', background: '#ccc' }}>
-            <img src="/src/assets/image.png" alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={heroImage} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         </div>
       </div>

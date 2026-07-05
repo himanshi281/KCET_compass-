@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search as SearchIcon, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../api';
+import heroImage from '../assets/image.png';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -295,7 +296,7 @@ export default function Search() {
               {/* Right Image/Graphic */}
               <div className="hero-image-wrapper">
                 <div className="hero-accent-bg"></div>
-                <img src="/src/assets/image.png" className="hero-image" alt="Student" />
+                <img src={heroImage} className="hero-image" alt="Student" />
                 
                 {/* Floating Badges */}
                 <div className="floating-badge badge-left">
