@@ -38,28 +38,38 @@ export default function Dashboard() {
     college.collegeCode?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const uniqueLocations = new Set(likedColleges.map(c => c.district).filter(Boolean)).size;
+  const totalCourses = likedColleges.reduce((acc, c) => acc + (c.courses?.length || 0), 0);
+
   return (
-    <div style={{ background: 'var(--bg-secondary)', minHeight: 'calc(100vh - 65px)' }}>
-      {/* Header */}
-      <div style={{ background: 'var(--bg-main)', borderBottom: '1px solid var(--border-color)', padding: '60px 20px', textAlign: 'center' }}>
-        
-        <div style={{ position: 'relative', width: '120px', height: '120px', margin: '0 auto 24px' }}>
-          <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'var(--bg-tertiary)', border: '4px solid white', boxShadow: 'var(--shadow-md)', overflow: 'hidden' }}>
-            <img src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.avatar || 'Felix'}`} alt="Avatar" style={{ width: '100%', height: '100%' }} />
+    <div style={{ background: 'var(--bg-secondary)', minHeight: 'calc(100vh - 65px)', paddingBottom: '60px' }}>
+      
+      {/* Header Island */}
+      <div className="dashboard-header-island" style={{ maxWidth: '1200px', margin: '20px auto 40px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px', flexWrap: 'wrap', gap: '24px' }}>
+          <div>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '8px' }}>Dashboard</h1>
+            <p style={{ color: '#8ab0a0', fontSize: '1.1rem' }}>Welcome back, {user?.name}</p>
           </div>
-          <button 
-            onClick={() => setIsEditingAvatar(!isEditingAvatar)}
-            style={{ position: 'absolute', bottom: 0, right: 0, background: 'var(--brand-orange)', color: 'white', border: 'none', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            title="Edit Avatar"
-          >
-            ✏️
-          </button>
+          
+          <div style={{ position: 'relative', width: '80px', height: '80px' }}>
+            <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', border: '3px solid rgba(255,255,255,0.2)', overflow: 'hidden' }}>
+              <img src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.avatar || 'Felix'}`} alt="Avatar" style={{ width: '100%', height: '100%' }} />
+            </div>
+            <button 
+              onClick={() => setIsEditingAvatar(!isEditingAvatar)}
+              style={{ position: 'absolute', bottom: -5, right: -5, background: 'white', color: 'var(--brand-orange)', border: 'none', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              title="Edit Avatar"
+            >
+              ✏️
+            </button>
+          </div>
         </div>
 
         {isEditingAvatar && (
-          <div style={{ background: 'white', borderRadius: '12px', padding: '24px', maxWidth: '600px', margin: '0 auto 32px', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'white', color: 'var(--text-primary)', borderRadius: '16px', padding: '24px', marginBottom: '32px', boxShadow: 'var(--shadow-lg)' }}>
             <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', fontWeight: 600 }}>Choose your avatar {updatingAvatar && '(Saving...)'}</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
               {AVATARS.map(seed => (
                 <button
                   key={seed}
@@ -79,16 +89,28 @@ export default function Dashboard() {
           </div>
         )}
 
-        <h1 className="results-title" style={{ fontWeight: 800, marginBottom: '16px' }}>My Dashboard</h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '32px' }}>Manage your profile and view your saved colleges.</p>
-        
-        {/* Search Input for Liked Colleges */}
-        <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto' }}>
-          <SearchIcon size={20} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+        {/* Dark Stat Cards */}
+        <div className="grid-3-cols" style={{ marginBottom: '32px' }}>
+          <div className="stat-card-dark">
+            <div className="stat-title">Saved Colleges</div>
+            <div className="stat-value">{likedColleges.length}</div>
+          </div>
+          <div className="stat-card-dark">
+            <div className="stat-title">Locations</div>
+            <div className="stat-value">{uniqueLocations}</div>
+          </div>
+          <div className="stat-card-dark">
+            <div className="stat-title">Total Courses</div>
+            <div className="stat-value">{totalCourses}</div>
+          </div>
+        </div>
+
+        {/* Search */}
+        <div style={{ position: 'relative' }}>
+          <SearchIcon size={20} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#8ab0a0' }} />
           <input 
             type="text" 
-            className="input" 
-            style={{ padding: '16px 16px 16px 48px', fontSize: '1.1rem', borderRadius: '8px', boxShadow: 'var(--shadow-sm)' }}
+            style={{ width: '100%', padding: '16px 16px 16px 48px', fontSize: '1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', outline: 'none' }}
             placeholder="Search your saved colleges..." 
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
@@ -96,14 +118,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="page-container" style={{ paddingTop: '40px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Saved Colleges ({filteredColleges.length})</h2>
-        </div>
-
+      {/* Main Content (Light Cards) */}
+      <div className="page-container" style={{ paddingTop: '20px' }}>
         {likedColleges.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '80px', color: 'var(--text-muted)', background: 'white', borderRadius: '12px', border: '1px dashed var(--border-color)' }}>
+          <div style={{ textAlign: 'center', padding: '80px', color: 'var(--text-muted)', background: 'white', borderRadius: '20px', border: '1px dashed var(--border-color)' }}>
             <Heart size={48} style={{ margin: '0 auto 16px', opacity: 0.5 }} />
             <h3 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>No Colleges Saved Yet</h3>
             <p style={{ marginBottom: '24px' }}>Explore colleges and click the heart icon to save them here.</p>
@@ -116,34 +134,44 @@ export default function Dashboard() {
         ) : (
           <div className="grid-3-cols" style={{ gap: '24px' }}>
             {filteredColleges.map((college) => (
-              <div key={college._id} style={{ background: 'white', borderRadius: '12px', padding: '24px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--brand-orange)', textTransform: 'uppercase' }}>{college.collegeCode}</div>
+              <div key={college._id} className="dashboard-card">
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px dashed var(--border-color)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--bg-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: 'var(--brand-orange)', fontSize: '0.875rem' }}>
+                      {college.collegeCode || 'CC'}
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.2, maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{college.collegeName}</h3>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Code #{college.collegeCode || 'N/A'}</div>
+                    </div>
+                  </div>
                   <button 
                     onClick={() => toggleLike(college._id)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#22c55e' }}
+                    style={{ background: 'rgba(34, 197, 94, 0.1)', border: 'none', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                     title="Remove from saved"
                   >
-                    <Heart size={20} fill="#22c55e" />
+                    <Heart size={16} fill="#22c55e" color="#22c55e" />
                   </button>
                 </div>
                 
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.3, marginBottom: '16px', flexGrow: 1 }}>{college.collegeName}</h3>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                    <MapPin size={16} /> {college.district || '--'}
+                <div style={{ flexGrow: 1, marginBottom: '24px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Location</span>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>{college.district || '--'}</span>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                    <Hash size={16} /> {college.collegeType || '--'}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Type</span>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>{college.collegeType || '--'}</span>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                    <GraduationCap size={16} /> {college.courses?.length || 0} Courses
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Courses</span>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>{college.courses?.length || 0}</span>
                   </div>
                 </div>
                 
-                <Link to={`/college/${college._id}`} state={{ college }} className="btn btn-outline" style={{ width: '100%', textAlign: 'center', padding: '12px' }}>
-                  View Full Details
+                <Link to={`/college/${college._id}`} state={{ college }} className="btn-dark-green">
+                  View details ↗
                 </Link>
               </div>
             ))}
