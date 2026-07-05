@@ -69,7 +69,7 @@ export default function CollegeDetails() {
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 title="Save college"
               >
-                <Heart size={24} fill={user.likedColleges?.some(c => (c._id || c) === college._id) ? 'var(--brand-orange)' : 'none'} color={user.likedColleges?.some(c => (c._id || c) === college._id) ? 'var(--brand-orange)' : 'var(--text-muted)'} />
+                <Heart size={24} fill={user.likedColleges?.some(c => (c._id || c) === college._id) ? '#22c55e' : 'none'} color={user.likedColleges?.some(c => (c._id || c) === college._id) ? '#22c55e' : 'var(--text-muted)'} />
               </button>
             )}
           </div>

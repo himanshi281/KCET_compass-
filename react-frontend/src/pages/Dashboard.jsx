@@ -68,10 +68,10 @@ export default function Dashboard() {
                   <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--brand-orange)', textTransform: 'uppercase' }}>{college.collegeCode}</div>
                   <button 
                     onClick={() => toggleLike(college._id)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-orange)' }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#22c55e' }}
                     title="Remove from saved"
                   >
-                    <Heart size={20} fill="var(--brand-orange)" />
+                    <Heart size={20} fill="#22c55e" />
                   </button>
                 </div>
                 

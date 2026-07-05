@@ -107,7 +107,7 @@ exports.toggleLike = async (req, res) => {
     const user = await User.findById(req.user.id);
     const collegeId = req.params.collegeId;
 
-    const isLiked = user.likedColleges.includes(collegeId);
+    const isLiked = user.likedColleges.some(id => id.toString() === collegeId);
 
     if (isLiked) {
       user.likedColleges = user.likedColleges.filter(id => id.toString() !== collegeId);

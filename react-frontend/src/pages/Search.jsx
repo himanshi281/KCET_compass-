@@ -190,11 +190,11 @@ export default function Search() {
           </span>
           {user && (
             <button 
-              onClick={(e) => { e.preventDefault(); toggleLike(c._id); }}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-orange)', padding: 0 }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleLike(c._id); }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: user.likedColleges?.some(lc => (lc._id || lc) === c._id) ? '#22c55e' : 'var(--text-muted)', padding: 0 }}
               title="Save college"
             >
-              <Heart size={20} fill={user.likedColleges?.some(lc => (lc._id || lc) === c._id) ? 'var(--brand-orange)' : 'none'} />
+              <Heart size={20} fill={user.likedColleges?.some(lc => (lc._id || lc) === c._id) ? '#22c55e' : 'none'} />
             </button>
           )}
           <span style={{ fontSize: '0.75rem', padding: '4px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', fontWeight: 500 }}>{c.district || 'Location'}</span>
