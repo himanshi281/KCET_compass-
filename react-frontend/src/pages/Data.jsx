@@ -10,8 +10,7 @@ export default function Data() {
       
       {/* 1. HERO BANNER */}
       <div style={{ padding: '40px 20px' }}>
-        <div style={{ 
-          display: 'flex', 
+        <div className="flex-wrap-mobile" style={{ 
           borderRadius: '24px', 
           overflow: 'hidden', 
           maxWidth: '1200px', 
@@ -58,7 +57,7 @@ export default function Data() {
       </div>
 
       {/* 2. FEATURES */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px', padding: '60px 20px', maxWidth: '1000px', margin: '0 auto' }}>
+      <div className="grid-3-cols" style={{ padding: '60px 20px', maxWidth: '1000px', margin: '0 auto' }}>
         <div>
           <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#2a5a4a', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
             <User color="#c8e6a1" size={24} />
@@ -87,7 +86,7 @@ export default function Data() {
         <h2 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '16px', color: '#111' }}>What our students say.</h2>
         <p style={{ color: '#666', fontSize: '0.95rem', marginBottom: '40px' }}>Our learners come from diverse backgrounds industries, and corners</p>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: '24px', height: '400px' }}>
+        <div className="grid-custom-stats" style={{ height: '100%', minHeight: '400px' }}>
           <div style={{ borderRadius: '24px', overflow: 'hidden', background: '#ccc' }}>
             <img src="/src/assets/image.png" alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>

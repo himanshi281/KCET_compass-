@@ -51,7 +51,7 @@ export default function CollegeDetails() {
           
           <h1 style={{ fontSize: '3rem', marginBottom: '16px', lineHeight: 1.1 }}>{college.collegeName}</h1>
           
-          <div style={{ display: 'flex', gap: '24px', color: 'var(--text-secondary)' }}>
+          <div className="flex-wrap-mobile" style={{ color: 'var(--text-secondary)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={18} color="var(--brand-orange)" /> {college.district || 'Unknown District'}</span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Hash size={18} color="var(--brand-orange)" /> {college.collegeCode}</span>
             <span style={{ background: 'rgba(42, 90, 74, 0.1)', color: 'var(--brand-orange)', padding: '2px 8px', borderRadius: '4px', fontWeight: 600, fontSize: '0.875rem' }}>
@@ -71,26 +71,28 @@ export default function CollegeDetails() {
           {(!college.courses || college.courses.length === 0) ? (
             <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>No courses found.</div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
-              <thead>
-                <tr style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}>
-                  <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>Course Name</th>
-                  <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>GM</th>
-                  <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>SCG</th>
-                  <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>STG</th>
-                </tr>
-              </thead>
-              <tbody>
-                {college.courses.map((c, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid var(--border-color)', transition: 'background 0.2s' }} onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-secondary)'} onMouseLeave={e => e.currentTarget.style.background = 'var(--bg-main)'}>
-                    <td style={{ padding: '16px 24px', fontWeight: 500 }}>{c.courseName}</td>
-                    <td style={{ padding: '16px 24px', color: c.cutoffs?.GM ? 'inherit' : 'var(--text-muted)' }}>{c.cutoffs?.GM || '--'}</td>
-                    <td style={{ padding: '16px 24px', color: c.cutoffs?.SCG ? 'inherit' : 'var(--text-muted)' }}>{c.cutoffs?.SCG || '--'}</td>
-                    <td style={{ padding: '16px 24px', color: c.cutoffs?.STG ? 'inherit' : 'var(--text-muted)' }}>{c.cutoffs?.STG || '--'}</td>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
+                <thead>
+                  <tr style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}>
+                    <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>Course Name</th>
+                    <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>GM</th>
+                    <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>SCG</th>
+                    <th style={{ padding: '16px 24px', fontWeight: 600, borderBottom: '1px solid var(--border-color)' }}>STG</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {college.courses.map((c, i) => (
+                    <tr key={i} style={{ borderBottom: '1px solid var(--border-color)', transition: 'background 0.2s' }} onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-secondary)'} onMouseLeave={e => e.currentTarget.style.background = 'var(--bg-main)'}>
+                      <td style={{ padding: '16px 24px', fontWeight: 500 }}>{c.courseName}</td>
+                      <td style={{ padding: '16px 24px', color: c.cutoffs?.GM ? 'inherit' : 'var(--text-muted)' }}>{c.cutoffs?.GM || '--'}</td>
+                      <td style={{ padding: '16px 24px', color: c.cutoffs?.SCG ? 'inherit' : 'var(--text-muted)' }}>{c.cutoffs?.SCG || '--'}</td>
+                      <td style={{ padding: '16px 24px', color: c.cutoffs?.STG ? 'inherit' : 'var(--text-muted)' }}>{c.cutoffs?.STG || '--'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>

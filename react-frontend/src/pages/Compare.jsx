@@ -59,7 +59,7 @@ export default function Compare() {
     <div style={{ background: 'var(--bg-secondary)', minHeight: 'calc(100vh - 65px)' }}>
       {/* Header */}
       <div style={{ background: 'var(--bg-main)', borderBottom: '1px solid var(--border-color)', padding: '60px 20px', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '3rem', marginBottom: '16px', fontWeight: 800 }}>Compare Colleges</h1>
+        <h1 className="results-title" style={{ fontWeight: 800, marginBottom: '16px' }}>Compare Colleges</h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '32px' }}>Select up to 3 colleges to compare their courses, cutoffs, and data side-by-side.</p>
         
         {/* Search Input */}
@@ -141,7 +141,7 @@ export default function Compare() {
                 {/* Location Row */}
                 <tr>
                   <td style={{ padding: '16px 24px', borderRight: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', fontWeight: 600, color: 'var(--text-secondary)', background: 'var(--bg-secondary)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MapPin size={16} /> Location</div>
+                    <div className="flex-wrap-mobile" style={{ alignItems: 'center', gap: '8px' }}><MapPin size={16} /> Location</div>
                   </td>
                   {selectedColleges.map(college => (
                     <td key={college._id} style={{ padding: '16px 24px', borderRight: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
@@ -153,7 +153,7 @@ export default function Compare() {
                 {/* Type Row */}
                 <tr>
                   <td style={{ padding: '16px 24px', borderRight: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', fontWeight: 600, color: 'var(--text-secondary)', background: 'var(--bg-secondary)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Hash size={16} /> Institution Type</div>
+                    <div className="flex-wrap-mobile" style={{ alignItems: 'center', gap: '8px' }}><Hash size={16} /> Institution Type</div>
                   </td>
                   {selectedColleges.map(college => (
                     <td key={college._id} style={{ padding: '16px 24px', borderRight: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
@@ -165,7 +165,7 @@ export default function Compare() {
                 {/* Course Cutoffs Section Header */}
                 <tr>
                   <td colSpan={selectedColleges.length + 1} style={{ padding: '24px', background: 'var(--bg-main)', borderBottom: '1px solid var(--border-color)', fontWeight: 700, fontSize: '1.1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--brand-orange)' }}><GraduationCap size={20} /> Course Cutoffs (GM)</div>
+                    <div className="flex-wrap-mobile" style={{ alignItems: 'center', gap: '8px', color: 'var(--brand-orange)' }}><GraduationCap size={20} /> Course Cutoffs (GM)</div>
                   </td>
                 </tr>
 

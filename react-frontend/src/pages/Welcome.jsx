@@ -6,6 +6,7 @@ import bgImage from '../assets/image.png';
 export default function Welcome() {
   return (
     <div style={{
+      backgroundColor: 'var(--brand-orange)',
       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(${bgImage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
@@ -16,11 +17,11 @@ export default function Welcome() {
     }}>
       <div className="page-container" style={{ textAlign: 'center', width: '100%' }}>
         <h4 style={{ color: 'white', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>Combine Quality with Morality</h4>
-        <h1 style={{ color: 'white', fontSize: '4.5rem', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.1, marginBottom: '40px' }}>
+        <h1 className="hero-title">
           Find Your Perfect<br/>College Destination.
         </h1>
         
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '80px' }}>
+        <div className="flex-wrap-mobile" style={{ justifyContent: 'center', marginBottom: '80px' }}>
           <Link to="/data" className="btn btn-primary" style={{ padding: '16px 32px', fontSize: '1.1rem' }}>
             <Search size={20} /> Search Colleges
           </Link>
@@ -29,7 +30,7 @@ export default function Welcome() {
           </Link>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', textAlign: 'left' }}>
+        <div className="grid-3-cols" style={{ textAlign: 'left' }}>
           <div style={{ background: 'var(--bg-secondary)', padding: '32px', borderRadius: '12px', border: '1px solid var(--border-color)', opacity: 0.95 }}>
             <GraduationCap size={40} color="var(--brand-orange)" style={{ marginBottom: '16px' }} />
             <h3 style={{ fontSize: '1.5rem', marginBottom: '12px', color: 'var(--text-primary)' }}>Explore Courses</h3>

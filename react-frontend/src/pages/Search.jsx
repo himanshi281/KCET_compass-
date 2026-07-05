@@ -210,7 +210,7 @@ export default function Search() {
   return (
     <div style={{ padding: '40px 20px', background: 'linear-gradient(to bottom, #e9f0ec, #ffffff)', minHeight: 'calc(100vh - 65px)' }}>
       {/* 4. SEARCH SECTION */}
-      <div id="search-section" style={{ display: 'grid', gridTemplateColumns: '280px 1fr', maxWidth: '1400px', margin: '0 auto', background: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+      <div id="search-section" className="grid-sidebar-layout" style={{ maxWidth: '1400px', margin: '0 auto', background: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
       {/* LEFT FILTERS */}
       <aside style={{ borderRight: '1px solid var(--border-color)', padding: '32px', background: '#fafafa' }}>
         <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', fontSize: '1.25rem' }}>
@@ -249,136 +249,59 @@ export default function Search() {
           </select>
         </div>
 
-        <div style={{ display: 'flex', gap: '12px', marginTop: '32px' }}>
-          <button className="btn btn-outline" style={{ flex: 1, borderColor: '#2a5a4a', color: '#2a5a4a' }} onClick={handleClearFilters}>
+        <div className="flex-wrap-mobile" style={{ marginTop: '32px' }}>
+          <button className="btn btn-outline" onClick={handleClearFilters}>
             Clear
           </button>
-          <button className="btn btn-primary" style={{ flex: 1, background: '#2a5a4a', color: 'white' }} onClick={handleApplyFilters}>
+          <button className="btn btn-primary" onClick={handleApplyFilters}>
             Apply
           </button>
         </div>
       </aside>
 
       {/* MAIN CONTENT */}
-      <main style={{ padding: '32px', background: 'white' }}>
+      <main className="search-main-content">
         {!hasFilters ? (
-          <div style={{
-            backgroundColor: '#f3f7f5',
-            backgroundImage: `linear-gradient(#e9f0ec 1px, transparent 1px), linear-gradient(90deg, #e9f0ec 1px, transparent 1px)`,
-            backgroundSize: '40px 40px',
-            borderRadius: '24px',
-            padding: '40px',
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '600px',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
+          <div className="empty-state-container">
             {/* Announcements Bar */}
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '60px', borderBottom: '1px solid #e9f0ec', paddingBottom: '16px' }}>
-              <div style={{ 
-                backgroundColor: '#1a332a', 
-                color: 'white', 
-                padding: '8px 16px', 
-                borderRadius: '8px', 
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                position: 'relative',
-                zIndex: 2
-              }}>
+            <div className="announcements-bar">
+              <div className="announcements-badge">
                 Announcements
-                <div style={{
-                  position: 'absolute',
-                  right: '-6px',
-                  top: '50%',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  width: '12px',
-                  height: '12px',
-                  backgroundColor: '#1a332a'
-                }} />
+                <div className="badge-arrow" />
               </div>
-              <div style={{ overflow: 'hidden', whiteSpace: 'nowrap', flex: 1, marginLeft: '20px' }}>
-                <div style={{ display: 'inline-block', color: '#8ab0a0', fontSize: '0.875rem' }}>
+              <div className="announcements-ticker">
+                <div className="ticker-content">
                   new openings...! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new openings...! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new openings...! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new openings...!
                 </div>
               </div>
             </div>
 
             {/* Main Content of Empty State */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '40px', flex: 1 }}>
+            <div className="empty-state-content">
               {/* Left Text */}
-              <div style={{ flex: 1.2, paddingRight: '20px' }}>
-                <h2 style={{ fontSize: '3rem', fontWeight: 600, color: '#1a332a', lineHeight: 1.2, marginBottom: '16px' }}>
+              <div className="empty-state-text">
+                <h2 className="hero-title">
                   Shaping Futures, Building Leaders<br />
-                  <span style={{ color: '#2a5a4a' }}>KCET Compass ⭐</span>
+                  <span className="hero-highlight">KCET Compass ⭐</span>
                 </h2>
-                <p style={{ color: '#666', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '40px', maxWidth: '450px' }}>
+                <p className="hero-subtitle">
                   Delivering excellence in education and vocational training with a holistic approach to student growth and global opportunities
                 </p>
-                <button onClick={() => document.querySelector('input[placeholder="e.g. 45000"]')?.focus()} style={{
-                  background: 'linear-gradient(90deg, #3d7a64, #2a5a4a)',
-                  color: 'white',
-                  border: 'none',
-                  padding: '16px 32px',
-                  borderRadius: '30px',
-                  fontSize: '1.1rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  boxShadow: '0 10px 20px rgba(42, 90, 74, 0.3)'
-                }}>
+                <button onClick={() => document.querySelector('input[placeholder="e.g. 45000"]')?.focus()} className="hero-cta">
                   Explore our institute
                 </button>
               </div>
 
               {/* Right Image/Graphic */}
-              <div style={{ flex: 1, position: 'relative', height: '400px' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '40px',
-                  right: 0,
-                  bottom: 0,
-                  left: '20%',
-                  backgroundColor: '#2a5a4a',
-                  borderRadius: '40px 100px 40px 40px',
-                  zIndex: 1
-                }}></div>
-                <img src="/src/assets/image.png" style={{ 
-                  position: 'absolute', 
-                  bottom: 0, 
-                  left: '10%', 
-                  height: '110%', 
-                  objectFit: 'cover',
-                  zIndex: 2,
-                  borderRadius: '24px'
-                }} alt="Student" />
+              <div className="hero-image-wrapper">
+                <div className="hero-accent-bg"></div>
+                <img src="/src/assets/image.png" className="hero-image" alt="Student" />
                 
                 {/* Floating Badges */}
-                <div style={{
-                  position: 'absolute',
-                  left: '-20px',
-                  top: '30%',
-                  backgroundColor: 'white',
-                  padding: '12px 24px',
-                  borderRadius: '30px',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                  zIndex: 3,
-                  fontWeight: 600,
-                  color: '#1a332a'
-                }}>
+                <div className="floating-badge badge-left">
                   Global Pathways
                 </div>
-                <div style={{
-                  position: 'absolute',
-                  right: '-10px',
-                  bottom: '15%',
-                  backgroundColor: 'white',
-                  padding: '12px 24px',
-                  borderRadius: '30px',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                  zIndex: 3,
-                  fontWeight: 600,
-                  color: '#1a332a'
-                }}>
+                <div className="floating-badge badge-right">
                   Student First
                 </div>
               </div>
@@ -386,70 +309,45 @@ export default function Search() {
           </div>
         ) : (
           <>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-              <h1 style={{ fontSize: '2rem' }}>Results ({filteredData.length})</h1>
+          <div className="flex-between-mobile" style={{ marginBottom: '32px' }}>
+            <h1 className="results-title">Search Results ({filteredData.length})</h1>
               
-              <div style={{ position: 'relative', width: '350px' }}>
-                <SearchIcon size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+              <div className="global-search-wrapper">
+                <SearchIcon size={18} className="search-icon" />
                 <input 
                   type="text" 
                   className="input" 
                   placeholder="Global Search (Name, Code, Location)" 
-                  style={{ paddingLeft: '40px' }}
                   value={globalSearch}
                   onChange={e => updateParams({ q: e.target.value, page: 1 })}
                 />
               </div>
             </div>
 
-            {loading && <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '20px' }}>Loading...</div>}
+            {loading && <div className="loading-state">Loading...</div>}
 
             {/* TAB UI */}
             {!loading && (categorized.safe.length > 0 || categorized.moderate.length > 0 || categorized.dream.length > 0) && (
-              <div style={{ display: 'flex', gap: '16px', marginBottom: '32px', borderBottom: '1px solid var(--border-color)' }}>
+              <div className="tabs-container">
                 
                 <button 
                   onClick={() => setActiveTab('safe')}
-                  style={{ 
-                    padding: '12px 24px', 
-                    background: 'transparent', 
-                    border: 'none',
-                    borderBottom: activeTab === 'safe' ? '2px solid #10b981' : '2px solid transparent',
-                    color: activeTab === 'safe' ? '#10b981' : 'var(--text-muted)',
-                    fontWeight: activeTab === 'safe' ? 600 : 500,
-                    cursor: 'pointer',
-                    fontSize: '1rem'
-                  }}>
+                  className={`tab-btn ${activeTab === 'safe' ? 'active-safe' : ''}`}
+                >
                   🟢 Safe ({categorized.safe.length})
                 </button>
                 
                 <button 
                   onClick={() => setActiveTab('moderate')}
-                  style={{ 
-                    padding: '12px 24px', 
-                    background: 'transparent', 
-                    border: 'none',
-                    borderBottom: activeTab === 'moderate' ? '2px solid #f59e0b' : '2px solid transparent',
-                    color: activeTab === 'moderate' ? '#f59e0b' : 'var(--text-muted)',
-                    fontWeight: activeTab === 'moderate' ? 600 : 500,
-                    cursor: 'pointer',
-                    fontSize: '1rem'
-                  }}>
+                  className={`tab-btn ${activeTab === 'moderate' ? 'active-moderate' : ''}`}
+                >
                   🟡 Moderate ({categorized.moderate.length})
                 </button>
                 
                 <button 
                   onClick={() => setActiveTab('dream')}
-                  style={{ 
-                    padding: '12px 24px', 
-                    background: 'transparent', 
-                    border: 'none',
-                    borderBottom: activeTab === 'dream' ? '2px solid #ef4444' : '2px solid transparent',
-                    color: activeTab === 'dream' ? '#ef4444' : 'var(--text-muted)',
-                    fontWeight: activeTab === 'dream' ? 600 : 500,
-                    cursor: 'pointer',
-                    fontSize: '1rem'
-                  }}>
+                  className={`tab-btn ${activeTab === 'dream' ? 'active-dream' : ''}`}
+                >
                   🔴 Dream ({categorized.dream.length})
                 </button>
 
@@ -458,7 +356,7 @@ export default function Search() {
 
             {/* ACTIVE TAB CONTENT */}
             {!loading && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+              <div className="grid-3-cols">
                 {activeTab === 'safe' && categorized.safe.map((c, i) => renderCard(c, i))}
                 {activeTab === 'moderate' && categorized.moderate.map((c, i) => renderCard(c, i))}
                 {activeTab === 'dream' && categorized.dream.map((c, i) => renderCard(c, i))}
