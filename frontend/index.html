@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCET College Selector | Welcome</title>
+  <link rel="stylesheet" href="assets/css/landing.css">
+</head>
+<body>
+
+  <div class="grid-overlay"></div>
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">KCET College Predictor</div>
+      <h1 class="title">HEY FUTURE ENGINEERS,<br><span>LETS CHECK YOUR COLLEGE</span></h1>
+      <p class="subtitle">
+        Make data-driven decisions for your future. Analyze historical cutoffs, compare top engineering institutions, and find your perfect match in Karnataka.
+      </p>
+
+      <div class="search-panel">
+        <div class="input-row">
+          <div class="input-group">
+            <label>KCET Rank</label>
+            <input type="number" id="landingRank" placeholder="e.g. 15000">
+          </div>
+          <div class="input-group">
+            <label>Branch</label>
+            <select id="landingBranch">
+              <option value="">Any Branch</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Location</label>
+            <select id="landingLocation">
+              <option value="">Any Location</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Category</label>
+            <select id="landingQuota">
+              <option value="GM">GM</option>
+              <option value="GMK">GMK</option>
+              <option value="GMR">GMR</option>
+            </select>
+          </div>
+        </div>
+        <button class="cta-button" onclick="submitLandingSearch()">Find My College →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Fetch and populate branch/location options
+    async function loadLandingFilters() {
+      try {
+        const res = await fetch("http://localhost:5000/api/colleges");
+        const colleges = await res.json();
+
+        const branchSet = new Set();
+        const locationSet = new Set();
+
+        colleges.forEach(c => {
+          if (c.district) locationSet.add(c.district);
+          c.courses?.forEach(course => {
+            if (course.courseName) branchSet.add(course.courseName);
+          });
+        });
+
+        const branchSelect = document.getElementById("landingBranch");
+        [...branchSet].sort().forEach(b => {
+          branchSelect.innerHTML += `<option value="${b}">${b}</option>`;
+        });
+
+        const locationSelect = document.getElementById("landingLocation");
+        [...locationSet].sort().forEach(l => {
+          locationSelect.innerHTML += `<option value="${l}">${l}</option>`;
+        });
+      } catch (err) {
+        console.log("Error loading filters:", err);
+      }
+    }
+
+    function submitLandingSearch() {
+      const rank = document.getElementById("landingRank").value;
+      const branch = document.getElementById("landingBranch").value;
+      const location = document.getElementById("landingLocation").value;
+      const quota = document.getElementById("landingQuota").value;
+
+      let url = `app.html?quota=${quota}`;
+      if (rank) url += `&rank=${rank}`;
+      if (branch) url += `&branch=${encodeURIComponent(branch)}`;
+      if (location) url += `&location=${encodeURIComponent(location)}`;
+
+      window.location.href = url;
+    }
+
+    loadLandingFilters();
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+/* ✨ COMPARE CARDS */
+/* ====================================== */
+
+.compare-card:hover {
+
+  transform:
+    scale(1.02);
+
+  box-shadow:
+    0 0 20px rgba(255,255,255,0.15);
+
+}
+
+
+
+/* ====================================== */
+\n/* 🧹 CLEAR COMPARE */
+/* ====================================== */
+
+.clear-compare-btn {
+
+  background:
+    linear-gradient(
+      135deg,
+      #8b1e3f,
+      #b03052
+    ) !important;
+
+  color: white;
+
+  font-weight: 700;
+
+  transition: 0.3s ease;
+
+  box-shadow:
+    0 0 18px rgba(0,0,0,0.12);
+
+}
+
+
+.clear-compare-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #a3264c,
+      #c63d66
+    ) !important;
+
+}
+/* ====================================== */

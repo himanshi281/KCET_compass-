@@ -1,0 +1,15 @@
+// 🔐 SIGNUP
+
+// 🔐 LOGIN
+
+// 🔐 LOGOUT
+
+// 🔐 AUTO LOGIN
+
+// 🔔 SHOW TOAST
+
+// 🔔 SHOW TOAST
+
+// 👤 OPEN DASHBOARD
+
+// 👤 CLOSE DASHBOARD

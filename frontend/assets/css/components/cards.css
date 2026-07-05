@@ -1,0 +1,208 @@
+/* ✅ RESULTS LAYOUT */
+#results {
+  display: block;
+}
+
+/* ✅ STATS PANEL */
+#statsPanel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.stat-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  transition: all var(--transition-fast);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.stat-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-shadow);
+}
+
+.stat-card h2 {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.stat-card p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* ✅ CATEGORY HEADERS */
+.category-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: var(--space-10);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ✅ CATEGORY GRID */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+}
+
+/* ✅ LINEAR-STYLE CARDS */
+.linear-card {
+  background: var(--card-gradient);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  position: relative;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.linear-card:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-color);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: var(--glow-shadow);
+}
+
+/* Header: Title & Favorite Button */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.card-title {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.favorite-btn {
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  border: none !important;
+  font-size: 1.2rem;
+  padding: 0 !important;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  line-height: 1;
+  width: auto;
+}
+.favorite-btn:hover { color: var(--danger) !important; transform: none !important; }
+.favorite-btn.active { color: var(--danger) !important; }
+
+/* Subtitle */
+.card-subtitle {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Tags */
+.card-tags {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.highlight-tag {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--accent-color);
+}
+
+/* Footer Action */
+.card-footer {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-3);
+  margin-top: var(--space-2);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-text {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.linear-card:hover .action-text {
+  color: var(--text-primary);
+}
+
+/* ✅ PAGINATION CONTROLS */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-color);
+}
+
+.pagination-controls button {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--accent-color);
+}
+
+.pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

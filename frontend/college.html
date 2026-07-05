@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Details | KCET Selector</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/college.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="college-nav">
+    <a href="app.html" class="back-btn">← Back to Dashboard</a>
+    <h1>KCET College Selector</h1>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="college-hero" id="collegeHero">
+    <div class="loader"></div>
+  </header>
+
+  <!-- Content Section -->
+  <main class="college-main hidden" id="collegeMain">
+    
+    <div class="stats-grid">
+      <div class="stat-box">
+        <span class="label">College Code</span>
+        <strong id="collegeCode">--</strong>
+      </div>
+      <div class="stat-box">
+        <span class="label">District</span>
+        <strong id="collegeDistrict">--</strong>
+      </div>
+      <div class="stat-box">
+        <span class="label">Type</span>
+        <strong id="collegeType">--</strong>
+      </div>
+    </div>
+
+    <section class="courses-section">
+      <h2>All Courses & Cutoffs</h2>
+      <div class="courses-grid" id="coursesGrid">
+        <!-- Courses injected via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="assets/js/college.js"></script>
+</body>
+</html>

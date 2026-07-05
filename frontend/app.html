@@ -1,0 +1,476 @@
+<!-- frontend/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>KCET College Selector</title>
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components/cards.css">
+
+
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+  </head>
+
+<body>
+  <!-- ===================================== -->
+<!-- 🔐 AUTH BUTTONS -->
+<!-- ===================================== -->
+
+<div class="auth-buttons">
+      <button id="themeToggleBtn" onclick="toggleTheme()" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-primary);">☀️ Light</button>
+
+  <button onclick="openSignupModal()">
+
+    Signup
+
+  </button>
+
+
+  <button onclick="openLoginModal()">
+
+    Login
+
+  </button>
+
+<button
+  id="dashboardBtn"
+  onclick="openDashboard()"
+  style="display:none;"
+>
+
+  Dashboard
+
+</button>
+  <button
+    id="logoutBtn"
+    onclick="logoutUser()"
+    style="display:none;"
+  >
+
+    Logout
+
+  </button>
+
+
+  <span id="welcomeUser">
+
+  </span>
+
+</div>
+
+  
+
+    <!-- Header hidden for dashboard view -->
+    <h1 style="display:none;">
+      KCET College Selector
+    </h1>
+
+    <p style="display:none;">
+      Find engineering colleges based on your rank,
+      branch, location, and quota.
+    </p>
+
+
+    <!-- ✅ HIDDEN SEARCH STATE (Maintains JS Compatibility) -->
+    <div style="display: none;">
+      <!-- ✅ RANK -->
+      <input type="number" id="rank" placeholder="Enter KCET Rank">
+
+      <!-- ✅ BRANCH -->
+      <select id="branch">
+        <option value="">Select Branch</option>
+      </select>
+
+      <!-- ✅ LOCATION -->
+      <select id="location">
+        <option value="">Select Location</option>
+      </select>
+
+      <!-- ✅ QUOTA -->
+      <select id="quota">
+        <option value="GM">GM</option>
+        <option value="GMK">GMK</option>
+        <option value="GMR">GMR</option>
+      </select>
+
+      <!-- ✅ BUTTONS -->
+      <div class="button-group">
+        <button onclick="searchColleges()">Search Colleges</button>
+        <button class="clear-btn" onclick="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+
+
+    <div class="app-layout">
+      <aside class="sidebar">
+    <!-- ✅ TOP BAR -->
+
+    <div class="top-bar">
+
+      <!-- RESULT COUNT -->
+
+      <div id="resultCount"></div>
+
+
+      <!-- SORT DROPDOWN -->
+
+      <select
+        id="sortOption"
+        onchange="sortResults()"
+      >
+
+        <option value="">
+          Sort Results
+        </option>
+
+        <option value="lowToHigh">
+          Lowest Cutoff
+        </option>
+
+        <option value="highToLow">
+          Highest Cutoff
+        </option>
+
+        <option value="alphabetical">
+          Alphabetical
+        </option>
+
+      </select>
+
+    </div>
+
+
+    
+
+<!-- ===================================== -->
+<!-- ⭐ COMPARE COLLEGES SECTION -->
+<!-- ===================================== -->
+
+<div class="compare-section">
+
+  <h2> Compare Colleges</h2>
+
+  <div class="compare-controls">
+
+    <select id="compareCollege1">
+
+      <option value="">
+        Select First College
+      </option>
+
+    </select>
+
+
+    <select id="compareCollege2">
+
+      <option value="">
+        Select Second College
+      </option>
+
+    </select>
+
+
+    <button onclick="compareColleges()">
+
+      Compare
+
+    </button>
+<button
+  onclick="clearCompare()"
+  class="clear-compare-btn"
+>
+
+  Clear Compare
+
+</button>
+  </div>
+
+
+  <div id="compareResults">
+
+  </div>
+
+</div>
+      </aside>
+
+      <main class="main-content">
+<!-- ✅ SEARCH PARAMETERS DISPLAY -->
+    <div class="search-summary" id="searchSummary" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
+      <div id="searchParamsText" style="color: #cbd5e1; font-size: 1.1rem; line-height: 1.6;">
+        <!-- Filled by JS -->
+        Loading your results...
+      </div>
+      <a href="index.html" style="background: #3b82f6; color: white; text-decoration: none; padding: 12px 24px; border-radius: 4px; font-weight: 600; font-size: 0.95rem; transition: 0.3s; border: 1px solid #60a5fa; white-space: nowrap; margin-left: 20px;">
+        Modify Search
+      </a>
+    </div>
+
+    
+<!-- ✅ STATS PANEL -->
+
+    
+    <!-- 🔍 GLOBAL SEARCH -->
+    <div class="global-search-container" style="margin-bottom: var(--space-6);">
+      <input type="text" id="globalSearch" placeholder="Search colleges, codes, or locations..." oninput="handleGlobalSearch(event)" style="font-size: 1rem; padding: 12px 16px; border-radius: var(--radius-lg);" />
+    </div>
+  
+    <div id="statsPanel"></div>
+    <!-- ✅ RESULTS -->
+
+    <div id="results"></div>
+          </main>
+    </div>
+    <!--  FLOATING ROBOT -->
+
+<div id="robotAssistant" class="robot-assistant">
+  
+</div>
+
+
+<!--  CHATBOT -->
+
+<div id="chatbotPopup" class="chatbot-popup hidden">
+
+  <div class="chatbot-header">
+
+    <span> KCET AI Assistant</span>
+
+    <button
+      onclick="toggleChatbot()"
+      class="close-chat"
+    >
+      ✕
+    </button>
+
+  </div>
+
+
+  <div id="chatMessages" class="chat-messages">
+
+    <div class="bot-message">
+
+      Hey  I’m your KCET assistant.
+      Ask me about colleges, branches or quotas.
+
+    </div>
+
+  </div>
+
+
+  <div class="chat-input-area">
+
+    <input
+      type="text"
+      id="chatInput"
+      placeholder="Ask about colleges..."
+    >
+
+    <button onclick="sendMessage()">
+      Send
+    </button>
+
+  </div>
+
+</div>
+
+  <script src="assets/js/main.js"></script>
+<!-- ===================================== -->
+<!-- ⭐ COLLEGE DETAILS MODAL -->
+<!-- ===================================== -->
+
+<div
+  id="collegeModal"
+  class="modal hidden"
+>
+
+  <div class="modal-content">
+
+    <span
+      class="close-modal"
+      onclick="closeCollegeModal()"
+    >
+
+      ✖
+
+    </span>
+
+
+    <div id="modalBody">
+
+    </div>
+
+  </div>
+
+</div>
+<!-- ===================================== -->
+<!-- 🔐 SIGNUP MODAL -->
+<!-- ===================================== -->
+
+<div
+  id="signupModal"
+  class="modal hidden"
+>
+
+  <div class="modal-content auth-modal">
+
+    <span
+      class="close-modal"
+      onclick="closeSignupModal()"
+    >
+
+      ✖
+
+    </span>
+
+
+    <h2> Signup</h2>
+
+
+    <input
+      type="text"
+      id="signupName"
+      placeholder="Enter Name"
+    >
+
+    <input
+      type="email"
+      id="signupEmail"
+      placeholder="Enter Email"
+    >
+
+    <input
+      type="password"
+      id="signupPassword"
+      placeholder="Enter Password"
+    >
+
+
+    <button onclick="signupUser()">
+
+      Create Account
+
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- 🔐 LOGIN MODAL -->
+<!-- ===================================== -->
+
+<div
+  id="loginModal"
+  class="modal hidden"
+>
+
+  <div class="modal-content auth-modal">
+
+    <span
+      class="close-modal"
+      onclick="closeLoginModal()"
+    >
+
+      ✖
+
+    </span>
+
+
+    <h2> Login</h2>
+
+
+    <input
+      type="email"
+      id="loginEmail"
+      placeholder="Enter Email"
+    >
+
+    <input
+      type="password"
+      id="loginPassword"
+      placeholder="Enter Password"
+    >
+
+
+    <button onclick="loginUser()">
+
+      Login
+
+    </button>
+
+  </div>
+
+</div>
+<!-- ===================================== -->
+<!-- 🔔 TOAST -->
+<!-- ===================================== -->
+
+<div
+  id="toast"
+  class="toast"
+>
+
+</div>
+<!-- ===================================== -->
+<!-- 🔔 TOAST -->
+<!-- ===================================== -->
+
+<div
+  id="toast"
+  class="toast"
+>
+
+</div>
+<!-- ===================================== -->
+<!-- 👤 USER DASHBOARD -->
+<!-- ===================================== -->
+
+<div
+  id="dashboardModal"
+  class="modal hidden"
+>
+
+  <div class="modal-content dashboard-modal">
+
+    <span
+      class="close-modal"
+      onclick="closeDashboard()"
+    >
+
+      ✖
+
+    </span>
+
+
+    <h2>
+
+      👤 User Dashboard
+
+    </h2>
+
+
+    <div
+      id="dashboardContent"
+    >
+
+    </div>
+
+  </div>
+
+</div>
+</body>
+
+</html>
