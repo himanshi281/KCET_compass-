@@ -2,28 +2,30 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Settings, ClipboardList } from 'lucide-react';
 import heroImage from '../assets/image.png';
+import heroImage1 from '../assets/image3.png';
+import heroImage2 from '../assets/image2.png';
 
 export default function Data() {
   const navigate = useNavigate();
 
   return (
     <div style={{ background: 'linear-gradient(to bottom, #e9f0ec, #ffffff)', minHeight: 'calc(100vh - 65px)', paddingBottom: '60px' }}>
-      
+
       {/* 1. HERO BANNER */}
       <div style={{ padding: '40px 20px' }}>
-        <div className="flex-wrap-mobile" style={{ 
-          borderRadius: '24px', 
-          overflow: 'hidden', 
-          maxWidth: '1200px', 
+        <div className="flex-wrap-mobile" style={{
+          borderRadius: '24px',
+          overflow: 'hidden',
+          maxWidth: '1200px',
           margin: '0 auto',
           boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
           minHeight: '500px'
         }}>
           {/* Left Green Side */}
-          <div style={{ 
-            flex: 1, 
-            background: '#2a5a4a', 
-            padding: '80px 60px', 
+          <div style={{
+            flex: 1,
+            background: '#2a5a4a',
+            padding: '80px 60px',
             color: 'white',
             display: 'flex',
             flexDirection: 'column',
@@ -36,13 +38,13 @@ export default function Data() {
               Join a global community of over 25,000 students who are transforming their skills and knowledge through our comprehensive courses. Whether you're a beginner or an experienced professional.
             </p>
             <div>
-              <button onClick={() => navigate('/search')} style={{ 
-                background: '#c8e6a1', 
-                color: '#1a332a', 
-                border: 'none', 
-                padding: '14px 28px', 
-                borderRadius: '50px', 
-                fontWeight: 600, 
+              <button onClick={() => navigate('/search')} style={{
+                background: '#c8e6a1',
+                color: '#1a332a',
+                border: 'none',
+                padding: '14px 28px',
+                borderRadius: '50px',
+                fontWeight: 600,
                 fontSize: '0.95rem',
                 cursor: 'pointer'
               }}>
@@ -86,19 +88,19 @@ export default function Data() {
       <div style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '1200px', margin: '0 auto', marginBottom: '40px' }}>
         <h2 style={{ fontSize: '2.5rem', fontWeight: 700, marginBottom: '16px', color: '#111' }}>What our students say.</h2>
         <p style={{ color: '#666', fontSize: '0.95rem', marginBottom: '40px' }}>Our learners come from diverse backgrounds industries, and corners</p>
-        
+
         <div className="grid-custom-stats" style={{ height: '100%', minHeight: '400px' }}>
           <div style={{ borderRadius: '24px', overflow: 'hidden', background: '#ccc' }}>
-            <img src={heroImage} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={heroImage1} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
-          
+
           <div style={{ background: '#2a5a4a', borderRadius: '24px', padding: '40px', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left' }}>
             <p style={{ fontSize: '1rem', lineHeight: 1.6, marginBottom: '32px' }}>
               "I enrolled in a few courses on Edux to brush up on my skills, and the results have been incredible. The content is thorough, the instructors are knowledgeable, and the flexibility allowed me to learn at my own pace."
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#ccc', overflow: 'hidden' }}>
-                <img src={heroImage} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={heroImage1} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div>
                 <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>Brooklyn Simmons</div>
@@ -106,9 +108,9 @@ export default function Data() {
               </div>
             </div>
           </div>
-          
+
           <div style={{ borderRadius: '24px', overflow: 'hidden', background: '#ccc' }}>
-            <img src={heroImage} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={heroImage2} alt="Student" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         </div>
       </div>
