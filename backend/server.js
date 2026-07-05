@@ -48,16 +48,16 @@ app.use(
 
 mongoose.connect(process.env.MONGO_URI)
 
-.then(() => {
+  .then(() => {
 
-  console.log("✅ MongoDB Connected");
+    console.log("✅ MongoDB Connected");
 
-})
+  })
 
-.catch((error) => {
+  .catch((error) => {
 
-  console.log(error);
-});
+    console.log(error);
+  });
 
 const PORT = process.env.PORT || 5000;
 
