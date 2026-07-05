@@ -26,11 +26,8 @@ export default function Login() {
   return (
     <div className="auth-container">
       {/* Left side: Image */}
-      <div className="auth-image-side">
-        <div className="hero-accent-bg"></div>
-        <img src={heroImage} className="hero-image" alt="Student" />
-        <div className="floating-badge badge-left">Welcome Back</div>
-        <div className="floating-badge badge-right">KCET Compass ⭐</div>
+      <div className="auth-image-side" style={{ padding: 0 }}>
+        <img src={heroImage} alt="Campus" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </div>
 
       {/* Right side: Form */}
