@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import heroImage from '../assets/image.png';
+import heroImage from '../assets/image1.png';
 
 export default function Login() {
   const [email, setEmail] = useState('');
