@@ -1,19 +1,22 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
+  
+  const from = location.state?.from || '/dashboard';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate('/dashboard');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
@@ -56,7 +59,7 @@ export default function Login() {
         </form>
 
         <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Don't have an account? <Link to="/signup" style={{ color: 'var(--brand-orange)', fontWeight: 600, textDecoration: 'none' }}>Sign up</Link>
+          Don't have an account? <Link to="/signup" state={{ from }} style={{ color: 'var(--brand-orange)', fontWeight: 600, textDecoration: 'none' }}>Sign up</Link>
         </p>
       </div>
     </div>

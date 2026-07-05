@@ -61,7 +61,7 @@ export default function CollegeDetails() {
               </div>
             </div>
             
-            {user && (
+            {user ? (
               <button 
                 onClick={() => toggleLike(college._id)}
                 style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '50%', padding: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)', transition: 'transform 0.2s' }}
@@ -70,6 +70,16 @@ export default function CollegeDetails() {
                 title="Save college"
               >
                 <Heart size={24} fill={user.likedColleges?.some(c => (c._id || c) === college._id) ? '#22c55e' : 'none'} color={user.likedColleges?.some(c => (c._id || c) === college._id) ? '#22c55e' : 'var(--text-muted)'} />
+              </button>
+            ) : (
+              <button 
+                onClick={() => navigate('/login', { state: { from: location.pathname + location.search } })}
+                style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '50%', padding: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)', transition: 'transform 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                title="Login to save college"
+              >
+                <Heart size={24} fill="none" color="var(--text-muted)" />
               </button>
             )}
           </div>

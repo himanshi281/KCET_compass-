@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 export default function Signup() {
   const [name, setName] = useState('');
@@ -8,13 +8,16 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { register } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
+  
+  const from = location.state?.from || '/dashboard';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await register(name, email, password);
-      navigate('/dashboard');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     }
@@ -68,7 +71,7 @@ export default function Signup() {
         </form>
 
         <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Already have an account? <Link to="/login" style={{ color: 'var(--brand-orange)', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
+          Already have an account? <Link to="/login" state={{ from }} style={{ color: 'var(--brand-orange)', fontWeight: 600, textDecoration: 'none' }}>Log in</Link>
         </p>
       </div>
     </div>

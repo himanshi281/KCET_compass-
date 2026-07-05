@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useContext } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { Search as SearchIcon, Filter, ChevronLeft, ChevronRight, Heart } from 'lucide-react';
 import api from '../api';
 import heroImage from '../assets/image.png';
@@ -7,6 +7,8 @@ import { AuthContext } from '../context/AuthContext';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   
   // URL Params State
   const rank = searchParams.get('rank') || '';
@@ -188,13 +190,21 @@ export default function Search() {
           <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--brand-orange)', textTransform: 'uppercase' }}>
             {c.collegeCode || 'CODE'}
           </span>
-          {user && (
+          {user ? (
             <button 
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleLike(c._id); }}
               style={{ background: 'none', border: 'none', cursor: 'pointer', color: user.likedColleges?.some(lc => (lc._id || lc) === c._id) ? '#22c55e' : 'var(--text-muted)', padding: 0 }}
               title="Save college"
             >
               <Heart size={20} fill={user.likedColleges?.some(lc => (lc._id || lc) === c._id) ? '#22c55e' : 'none'} />
+            </button>
+          ) : (
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate('/login', { state: { from: location.pathname + location.search } }); }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}
+              title="Login to save college"
+            >
+              <Heart size={20} fill="none" />
             </button>
           )}
           <span style={{ fontSize: '0.75rem', padding: '4px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', fontWeight: 500 }}>{c.district || 'Location'}</span>
