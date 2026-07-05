@@ -27,8 +27,16 @@ export default function Signup() {
   return (
     <div className="auth-container">
       {/* Left side: Image */}
-      <div className="auth-image-side" style={{ padding: 0 }}>
-        <img src={heroImage} alt="Campus" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      <div 
+        className="auth-image-side" 
+        style={{ 
+          padding: 0,
+          backgroundImage: `url(${heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
       </div>
 
       {/* Right side: Form */}
