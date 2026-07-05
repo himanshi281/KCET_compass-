@@ -67,7 +67,7 @@ export default function Dashboard() {
         </div>
 
         {isEditingAvatar && (
-          <div style={{ background: 'white', color: 'var(--text-primary)', borderRadius: '16px', padding: '24px', marginBottom: '32px', boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ background: 'white', color: 'var(--text-primary)', borderRadius: '0', padding: '24px', marginBottom: '32px', boxShadow: 'var(--shadow-lg)' }}>
             <h3 style={{ fontSize: '1.1rem', marginBottom: '16px', fontWeight: 600 }}>Choose your avatar {updatingAvatar && '(Saving...)'}</h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
               {AVATARS.map(seed => (
@@ -110,7 +110,7 @@ export default function Dashboard() {
           <SearchIcon size={20} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#8ab0a0' }} />
           <input 
             type="text" 
-            style={{ width: '100%', padding: '16px 16px 16px 48px', fontSize: '1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', outline: 'none' }}
+            style={{ width: '100%', padding: '16px 16px 16px 48px', fontSize: '1rem', borderRadius: '0', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', outline: 'none' }}
             placeholder="Search your saved colleges..." 
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
@@ -121,7 +121,7 @@ export default function Dashboard() {
       {/* Main Content (Light Cards) */}
       <div className="page-container" style={{ paddingTop: '20px' }}>
         {likedColleges.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '80px', color: 'var(--text-muted)', background: 'white', borderRadius: '20px', border: '1px dashed var(--border-color)' }}>
+          <div style={{ textAlign: 'center', padding: '80px', color: 'var(--text-muted)', background: 'white', borderRadius: '0', border: '1px dashed var(--border-color)' }}>
             <Heart size={48} style={{ margin: '0 auto 16px', opacity: 0.5 }} />
             <h3 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>No Colleges Saved Yet</h3>
             <p style={{ marginBottom: '24px' }}>Explore colleges and click the heart icon to save them here.</p>
